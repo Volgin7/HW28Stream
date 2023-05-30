@@ -65,7 +65,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(employeesList.isEmpty()) {
             throw new EmployeeNotFoundException();
         }
-
         return employeesList;
     }
 }
