@@ -5,13 +5,13 @@ import java.util.Objects;
 public class Employee {
     private final String firstName;
     private final String lastName;
-    private int department;
+    private int departmentId;
     private long salary; // in cents
 
-    public Employee(String firstName, String lastName, int department, long salary) {
+    public Employee(String firstName, String lastName, int departmentId, long salary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.department = department;
+        this.departmentId = departmentId;
         this.salary = salary;
     }
 
@@ -32,13 +32,13 @@ public class Employee {
         return "Employee{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", department=" + department +
+                ", departmentId=" + departmentId +
                 ", salary=" + salary +
                 '}';
     }
 
-    public int getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     public long getSalary() {
@@ -51,5 +51,13 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public void setSalary(long salary) {
+        this.salary = salary;
     }
 }

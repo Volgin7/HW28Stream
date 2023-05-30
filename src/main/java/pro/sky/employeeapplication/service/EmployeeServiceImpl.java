@@ -16,6 +16,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String,Employee> employees;
     private final int MAX_NUMBER_OF_EMPLOYEES = 6;
 
+    public Map<String, Employee> getEmployees() {
+        return employees;
+    }
+
     public int getMAX_NUMBER_OF_EMPLOYEES() {
 
         return MAX_NUMBER_OF_EMPLOYEES;
@@ -25,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employees = new HashMap<>();
     }
     @Override
-    public Employee add(String firstName, String lastName, int department, long salary) {
+    public Employee add(String firstName, String lastName, int departmentId, long salary) {
         if(this.employees.size()>=this.getMAX_NUMBER_OF_EMPLOYEES()) {
             throw new StorageFullException();
         }
@@ -33,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.containsKey(key)) {
             throw new EmployeeAlreadyAddedException();
         }
-        Employee employee = new Employee(firstName, lastName, department, salary);
+        Employee employee = new Employee(firstName, lastName, departmentId, salary);
         employees.put(key, employee);
         return employee;
     }
@@ -43,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         String key = lastName + firstName;
         if (employees.containsKey(key)) {
-            Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartment(), employees.get(key).getSalary());
+            Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
             employees.remove(key);
             return employee;
         }
@@ -54,7 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee find(String firstName, String lastName) {
         String key = lastName + firstName;
         if (employees.containsKey(key)) {
-            Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartment(), employees.get(key).getSalary());
+            Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
             return employee;
         }
         throw new EmployeeNotFoundException();
@@ -64,5 +68,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Map<String, Employee> list() {
         return new HashMap<>(employees);
     }
+
+    @Override
+    public Employee setSalary(String firstName, String lastName, long salary) {
+
+        String key = lastName + firstName;
+        if (employees.containsKey(key)) {
+            employees.get(key).setSalary(salary);
+            Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
+            return employee;
+        }
+        throw new EmployeeNotFoundException();
+    }
+
+    @Override
+    public Employee setDepartmentId(String firstName, String lastName, int departmentId) {
+
+        String key = lastName + firstName;
+        if (employees.containsKey(key)) {
+            employees.get(key).setDepartmentId(departmentId);
+            Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
+            return employee;
+        }
+        throw new EmployeeNotFoundException();
+    }
+
 
 }
