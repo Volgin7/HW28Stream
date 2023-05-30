@@ -51,4 +51,21 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         return employee;
     }
+
+    @Override
+    public Optional<List<String>> listByDepartments() {
+        List<Employee> employees = new ArrayList<>(employeeServiceImpl.getEmployees().values());
+        Comparator<Employee> compareEmployees = Comparator
+                .comparing(Employee::getDepartmentId)
+                .thenComparing(Employee::getLastName);
+        Optional <List<String>> employeesList = Optional.of(employees.stream()
+                .sorted(compareEmployees)
+                .map(e-> "Department = " + e.getDepartmentId() + " " + e.getLastName() + " " + e.getFirstName())
+                .collect(Collectors.toList()));
+        if(employeesList.isEmpty()) {
+            throw new EmployeeNotFoundException();
+        }
+
+        return employeesList;
+    }
 }

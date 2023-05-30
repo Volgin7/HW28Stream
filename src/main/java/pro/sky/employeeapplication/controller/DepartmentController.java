@@ -37,4 +37,9 @@ public class DepartmentController {
     {
         return deptService.maxSalary(departmentId);
     }
+    @GetMapping("/list")
+    public Optional<List<String>> listByDepartments()
+    {
+        return deptService.listByDepartments();
+    }
 }
