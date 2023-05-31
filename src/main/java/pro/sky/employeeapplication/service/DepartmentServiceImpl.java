@@ -56,18 +56,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Optional<Map<Integer,List<Employee>>> listByDepartments() {
         List<Employee> employees = new ArrayList<>(employeeServiceImpl.getEmployees().values());
-/*
-        Optional <List<String>> employeesList = Optional.of(employees.stream()
-                .sorted(compareEmployees)
-                .map(e-> "Department = " + e.getDepartmentId() + " " + e.getLastName() + " " + e.getFirstName())
-                .collect(Collectors.toList()));
-        if(employeesList.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        return employeesList;
-
- */
-
         Optional <Map<Integer, List<Employee>>> mapEmployees = Optional.of(employees.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartmentId)));
         if(mapEmployees.isEmpty()) {
