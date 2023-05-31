@@ -6,6 +6,7 @@ import pro.sky.employeeapplication.model.Employee;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -53,11 +54,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Optional<List<String>> listByDepartments() {
+    public Optional<Map<Integer,List<Employee>>> listByDepartments() {
         List<Employee> employees = new ArrayList<>(employeeServiceImpl.getEmployees().values());
-        Comparator<Employee> compareEmployees = Comparator
-                .comparing(Employee::getDepartmentId)
-                .thenComparing(Employee::getLastName);
+/*
         Optional <List<String>> employeesList = Optional.of(employees.stream()
                 .sorted(compareEmployees)
                 .map(e-> "Department = " + e.getDepartmentId() + " " + e.getLastName() + " " + e.getFirstName())
@@ -66,5 +65,14 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new EmployeeNotFoundException();
         }
         return employeesList;
+
+ */
+
+        Optional <Map<Integer, List<Employee>>> mapEmployees = Optional.of(employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartmentId)));
+        if(mapEmployees.isEmpty()) {
+            throw new EmployeeNotFoundException();
+        }
+        return mapEmployees;
     }
 }

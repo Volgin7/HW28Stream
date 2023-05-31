@@ -8,6 +8,7 @@ import pro.sky.employeeapplication.model.Employee;
 import pro.sky.employeeapplication.service.DepartmentService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -38,7 +39,7 @@ public class DepartmentController {
         return deptService.maxSalary(departmentId);
     }
     @GetMapping("/list")
-    public Optional<List<String>> listByDepartments()
+    public Optional<Map<Integer,List<Employee>>> listByDepartments()
     {
         return deptService.listByDepartments();
     }
