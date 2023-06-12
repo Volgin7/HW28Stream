@@ -34,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new StorageFullException();
         }
         String key = lastName + firstName;
+        key = key.toLowerCase();
         if (employees.containsKey(key)) {
             throw new EmployeeAlreadyAddedException();
         }
@@ -46,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee remove(String firstName, String lastName) {
 
         String key = lastName + firstName;
+        key.toLowerCase();
         if (employees.containsKey(key)) {
             Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
             employees.remove(key);
@@ -57,6 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee find(String firstName, String lastName) {
         String key = lastName + firstName;
+        key.toLowerCase();
         if (employees.containsKey(key)) {
             Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
             return employee;
@@ -73,6 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee setSalary(String firstName, String lastName, long salary) {
 
         String key = lastName + firstName;
+        key.toLowerCase();
         if (employees.containsKey(key)) {
             employees.get(key).setSalary(salary);
             Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());
@@ -84,7 +88,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee setDepartmentId(String firstName, String lastName, int departmentId) {
 
-        String key = lastName + firstName;
+        String key =  lastName + firstName;
+        key.toLowerCase();
         if (employees.containsKey(key)) {
             employees.get(key).setDepartmentId(departmentId);
             Employee employee = new Employee(firstName, lastName, employees.get(key).getDepartmentId(), employees.get(key).getSalary());

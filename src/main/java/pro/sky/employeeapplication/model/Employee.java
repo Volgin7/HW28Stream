@@ -1,6 +1,10 @@
 package pro.sky.employeeapplication.model;
 
+import org.apache.commons.lang3.StringUtils;
+import pro.sky.employeeapplication.exception.EmployeeBadNameException;
+
 import java.util.Objects;
+
 
 public class Employee {
     private final String firstName;
@@ -9,8 +13,13 @@ public class Employee {
     private long salary; // in cents
 
     public Employee(String firstName, String lastName, int departmentId, long salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+
+        if(!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
+            throw new EmployeeBadNameException();
+        }
+
+        this.firstName = StringUtils.capitalize(firstName);
+        this.lastName = StringUtils.capitalize(lastName);
         this.departmentId = departmentId;
         this.salary = salary;
     }
